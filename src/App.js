@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Form, Button, Card, Spinner, Alert, Row, Col, Dropdown, ButtonGroup, Image, Nav, Navbar, Tooltip, OverlayTrigger, ListGroup, DropdownButton } from 'react-bootstrap';
 import { Youtube, FileText, Link as LinkIcon, Globe, List, SunFill, MoonFill, BoxArrowRight, Google, GearFill, ClockHistory, PersonCircle, Trash } from 'react-bootstrap-icons';
 import ReactMarkdown from 'react-markdown';
+import axios from 'axios';
 
 // --- Configuration ---
 const BACKEND_URL = process.env.REACT_APP_API_URL; // Ensure this is your backend server URL
@@ -187,15 +188,21 @@ function CompentubeApp() {
     useEffect(() => {
         const checkAuthStatus = async () => {
             try {
-                const response = await fetch(`${BACKEND_URL}/api/auth/status`, { credentials: 'include' });
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.loggedIn) setUser(data.user);
+                const response = await axios.get(`${BACKEND_URL}/api/auth/status`, {
+                    withCredentials: true // BU SATIR ÇOK KRİTİK!
+                });
+                if (response.data.authenticated) {
+                    // Kullanıcı giriş yapmış
+                    console.log("Frontend: User is authenticated.");
+                    return response.data.user;
+                } else {
+                    // Kullanıcı giriş yapmamış
+                    console.log("Frontend: User is NOT authenticated.");
+                    return null;
                 }
             } catch (error) {
-                console.error("Could not verify auth status:", error);
-            } finally {
-                setAuthLoading(false);
+                console.error("Frontend: Error checking authentication status:", error);
+                return null;
             }
         };
         checkAuthStatus();
