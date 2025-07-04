@@ -6,7 +6,7 @@ import { Youtube, FileText, Link as LinkIcon, Globe, List, SunFill, MoonFill, Bo
 import ReactMarkdown from 'react-markdown';
 
 // --- Configuration ---
-const BACKEND_URL = 'http://localhost:5000'; // Ensure this is your backend server URL
+const BACKEND_URL = process.env.REACT_APP_API_URL; // Ensure this is your backend server URL
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID; // Your Google Client ID from .env
 
 // --- Internationalization (i18n) ---
