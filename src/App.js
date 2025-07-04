@@ -177,7 +177,7 @@ function CompentubeApp() {
     const [summary, setSummary] = useState(''); // Added state for summary
     const [videoDetails, setVideoDetails] = useState(null); // Added state for videoDetails
 
-    const { t } = useContext(LanguageContext);
+    // const { t } = useContext(LanguageContext);
 
     useEffect(() => {
         document.documentElement.setAttribute('data-bs-theme', theme);
